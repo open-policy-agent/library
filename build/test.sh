@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 usage() {
     echo "check.sh --base-dir=<base-dir>"
     echo "         --docker-image=<docker-image>"
@@ -27,4 +29,4 @@ if [ -z "$BASE_DIR" -o -z "$DOCKER_IMAGE" ]; then
     exit 1
 fi
 
-docker run --volume $(PWD):/library $DOCKER_IMAGE test --verbose /library
+docker run --volume $BASE_DIR:/library $DOCKER_IMAGE test --verbose /library
