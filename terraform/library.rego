@@ -21,7 +21,7 @@ import input as tfplan
 # Note: written as a comprehension to eliminate duplicates proactively
 #  https://github.com/open-policy-agent/opa/issues/429
 resource_types = all {
-    all = {y | tfplan[name]; split(name, ".", outs); y = outs[0]}
+	all = {y | tfplan[name]; split(name, ".", outs); y = outs[0]}
 }
 
 # Dictionary that maps the instance name to its full object
@@ -36,7 +36,7 @@ instance_names_of_type[resource_type] = all {
 	all = {name |
 		tfplan[name] = _
 		has_type(name, resource_type, true)
-    }
+	}
 }
 
 # Function that checks if a given resource-instance name has a given type
