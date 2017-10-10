@@ -1,6 +1,4 @@
-# using tip for alpine image.
-# once 0.5.8 is released, can move back to latest/stable.
-VERSION ?= 0.5.8-dev
+VERSION ?= latest
 REPOSITORY ?= openpolicyagent/opa
 IMAGE := $(REPOSITORY):$(VERSION)
 

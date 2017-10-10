@@ -24,7 +24,7 @@ weights = {
 # Authorization holds if score for the plan is acceptable and no changes are made to IAM
 default authz = false
 
-authz = true {
+authz {
 	score < blast_radius
 	not touches_iam
 }
@@ -44,7 +44,7 @@ score = s {
 }
 
 # Whether there is any change to IAM
-touches_iam = true {
+touches_iam {
 	all = library.instance_names_of_type.aws_iam
 	count(all, c)
 	c > 0
