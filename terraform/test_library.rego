@@ -16,14 +16,14 @@ test_resource_types {
 	x = {"aws_autoscaling_group", "aws_instance", "aws_launch_configuration"}
 }
 
-test_small_create_by_type {
+test_small_create_of_type {
 	true
 	i = inputs.lineage0
 	library.num_creates_of_type.aws_instance = 1 with input as i
 	library.num_creates_of_type.aws_autoscaling_group = 1 with input as i
 	library.num_creates_of_type.aws_launch_configuration = 1 with input as i
-	not has_non_zero_value(library.num_deletes_by_type, true) with input as i
-	not has_non_zero_value(library.num_modifies_by_type, true) with input as i
+	not has_non_zero_value(library.num_deletes_of_type, true) with input as i
+	not has_non_zero_value(library.num_modifies_of_type, true) with input as i
 }
 
 test_mix {
@@ -33,7 +33,7 @@ test_mix {
 	library.num_modifies = 1 with input as i
 }
 
-test_mix_by_type {
+test_mix_of_type {
 	i = inputs.lineage1
 	library.num_creates_of_type.aws_instance = 1 with input as i
 	library.num_modifies_of_type.aws_autoscaling_group = 1 with input as i
@@ -47,13 +47,13 @@ test_large_create {
 	library.num_modifies = 0 with input as i
 }
 
-test_large_create_by_type {
+test_large_create_of_type {
 	i = inputs.large_create
 	library.num_creates_of_type.aws_instance = 1 with input as i
 	library.num_creates_of_type.aws_autoscaling_group = 3 with input as i
 	library.num_creates_of_type.aws_launch_configuration = 1 with input as i
-	not has_non_zero_value(library.num_deletes_by_type, true) with input as i
-	not has_non_zero_value(library.num_modifies_by_type, true) with input as i
+	not has_non_zero_value(library.num_deletes_of_type, true) with input as i
+	not has_non_zero_value(library.num_modifies_of_type, true) with input as i
 }
 
 has_non_zero_value(dictionary) {
