@@ -5,29 +5,39 @@ package library.kubernetes.admission.alwayspullimages
 
 # Allow only if all containers have PullPolicy set to Always
 default admit = false
-admit { not deny }
-deny { overwrite[path] }
+
+admit {
+	not deny
+}
+
+deny {
+	overwrite[path]
+}
 
 # Overwrite imagePullPolicy so it is always "Always"
 overwrite[path] = "Always" {
-    input.kind = "Pod" 
-    input.spec.containers[i].imagePullPolicy != "Always"
-    path = sprintf("spec.containers[%v].imagePullPolicy", [i])
+	input.kind = "Pod"
+	input.spec.containers[i].imagePullPolicy != "Always"
+	path = sprintf("spec.containers[%v].imagePullPolicy", [i])
 }
+
 overwrite[path] = "Always" {
-    input.kind = "Pod"
-    container = input.spec.containers[i]
-    not container.imagePullPolicy
-    path = sprintf("spec.containers[%v].imagePullPolicy", [i])
+	input.kind = "Pod"
+	container = input.spec.containers[i]
+	not container.imagePullPolicy
+	path = sprintf("spec.containers[%v].imagePullPolicy", [i])
 }
+
 overwrite[path] = "Always" {
-    input.kind = "Pod"
-    input.spec.initContainers[i].imagePullPolicy != "Always"
-    path = sprintf("spec.initContainers[%v].imagePullPolicy", [i])
+	input.kind = "Pod"
+	input.spec.initContainers[i].imagePullPolicy != "Always"
+	path = sprintf("spec.initContainers[%v].imagePullPolicy", [i])
 }
+
 overwrite[path] = "Always" {
-    input.kind = "Pod"
-    container = input.spec.initContainers[i]
-    not container.imagePullPolicy
-    path = sprintf("spec.initContainers[%v].imagePullPolicy", [i])
+	input.kind = "Pod"
+	container = input.spec.initContainers[i]
+	not container.imagePullPolicy
+	path = sprintf("spec.initContainers[%v].imagePullPolicy", [i])
 }
+
