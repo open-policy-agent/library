@@ -17,8 +17,8 @@ warning[result] {
 }
 
 is_prefixed(port) {
-    prefix = service_port_prefixes[port.name]
-    startswith(port.name, prefix)
+	prefix = service_port_prefixes[port.name]
+	startswith(port.name, prefix)
 }
 
 service_port_prefixes = {

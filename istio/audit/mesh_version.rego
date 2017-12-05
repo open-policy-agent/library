@@ -38,13 +38,13 @@ warning[result] {
 
 pilot_version = v {
 	container = deployments["istio-system"]["istio-pilot"].spec.template.spec.containers[_]
-    container.name = "discovery"
+	container.name = "discovery"
 	v = get_version(container.image)
 }
 
 istio_version = v {
 	container = deployments["istio-system"]["istio-mixer"].spec.template.spec.containers[_]
-    container.name = "mixer"
+	container.name = "mixer"
 	v = get_version(container.image)
 }
 
