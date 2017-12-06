@@ -12,11 +12,9 @@ warning[result] {
 	istio_version != pilot_version
 	result = {
 		"type": "istio-component-mismatch",
-		"params": {
-			"name": "pilot",
-			"version": pilot_version,
-			"istio_version": istio_version,
-		},
+		"name": "pilot",
+		"version": pilot_version,
+		"istio_version": istio_version,
 	}
 }
 
@@ -27,12 +25,10 @@ warning[result] {
 	v != istio_version
 	result = {
 		"type": "sidecar-mismatch",
-		"params": {
-			"name": name,
-			"namespace": namespace,
-			"proxy_version": v,
-			"istio_version": istio_version,
-		},
+		"name": name,
+		"namespace": namespace,
+		"proxy_version": v,
+		"istio_version": istio_version,
 	}
 }
 

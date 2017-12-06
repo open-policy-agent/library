@@ -8,7 +8,7 @@ info[result] {
 	num_system_pods = sum(counts)
 	result = {
 		"type": "system-pod-count",
-		"params": {"num_system_pods": num_system_pods},
+		"num_system_pods": num_system_pods,
 	}
 }
 
@@ -19,10 +19,8 @@ info[result] {
 	num_in_mesh_pods = sum(in_mesh_counts)
 	result = {
 		"type": "user-pod-count",
-		"params": {
-			"num_user_pods": num_total_pods,
-			"num_in_mesh_pods": num_in_mesh_pods,
-		},
+		"num_user_pods": num_total_pods,
+		"num_in_mesh_pods": num_in_mesh_pods,
 	}
 }
 
