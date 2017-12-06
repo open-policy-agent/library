@@ -11,11 +11,9 @@ error[result] {
 	not container.livenessProbe.exec
 	result = {
 		"type": "mtls-probes-incompatible",
-		"params": {
-			"probe": "liveness",
-			"name": name,
-			"namespace": namespace,
-		},
+		"probe": "liveness",
+		"name": name,
+		"namespace": namespace,
 	}
 }
 
@@ -27,11 +25,9 @@ error[result] {
 	not container.readinessProbe.exec
 	result = {
 		"type": "mtls-probes-incompatible",
-		"params": {
-			"probe": "readiness",
-			"name": name,
-			"namespace": namespace,
-		},
+		"probe": "readiness",
+		"name": name,
+		"namespace": namespace,
 	}
 }
 

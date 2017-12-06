@@ -9,10 +9,8 @@ warning[result] {
 	not is_prefixed(port)
 	result = {
 		"type": "missing-service-port-prefix",
-		"params": {
-			"service_name": name,
-			"service_namespace": namespace,
-		},
+		"service_name": name,
+		"service_namespace": namespace,
 	}
 }
 
