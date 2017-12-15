@@ -3,7 +3,7 @@
 set -e
 
 usage() {
-    echo "check.sh --base-dir=<base-dir>"
+    echo "test.sh --base-dir=<base-dir>"
     echo "         --docker-image=<docker-image>"
 }
 
