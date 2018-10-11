@@ -31,7 +31,7 @@ authz {
 
 # Compute the score for a Terraform plan as the weighted sum of deletions, creations, modifications
 score = s {
-	all = [x |
+	all := [x |
 		weights[resource_type] = crud
 		del = crud.delete * library.num_deletes_of_type[resource_type]
 		new = crud.create * library.num_creates_of_type[resource_type]
@@ -45,7 +45,7 @@ score = s {
 
 # Whether there is any change to IAM
 touches_iam {
-	all = library.instance_names_of_type.aws_iam
+	all := library.instance_names_of_type.aws_iam
 	count(all, c)
 	c > 0
 }

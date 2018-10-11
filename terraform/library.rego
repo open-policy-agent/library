@@ -21,7 +21,7 @@ import input as tfplan
 # Note: written as a comprehension to eliminate duplicates proactively
 #  https://github.com/open-policy-agent/opa/issues/429
 resource_types = all {
-	all = {y | tfplan[name]; split(name, ".", outs); y = outs[0]}
+	all := {y | tfplan[name]; split(name, ".", outs); y = outs[0]}
 }
 
 # Dictionary that maps the instance name to its full object
@@ -33,7 +33,7 @@ instance[name] = obj {
 # Dictionary mapping each resource-type into all the instance names with that type
 instance_names_of_type[resource_type] = all {
 	resource_types[resource_type]
-	all = {name |
+	all := {name |
 		tfplan[name] = _
 		has_type(name, resource_type, true)
 	}
@@ -51,7 +51,7 @@ num_deletes = num {
 
 # Set of all the resource-instance names being deleted
 deletes = deletions {
-	deletions = {name | obj = instance[name]; is_delete(obj, true)}
+	deletions := {name | obj = instance[name]; is_delete(obj, true)}
 }
 
 # Dictionary mapping each resource-type to the number of deletions of that type
@@ -62,7 +62,7 @@ num_deletes_of_type[resource_type] = num {
 # Dictionary mapping each resource-type to the list of deleted resource-instance names
 deletes_of_type[resource_type] = deletions {
 	resource_types[resource_type]
-	deletions = {name | name = deletes[_]; has_type(name, resource_type, true)}
+	deletions := {name | name = deletes[_]; has_type(name, resource_type, true)}
 }
 
 # Function defining whether a resource-instance is a deletion.
@@ -87,8 +87,8 @@ num_creates_of_type[resource_type] = num {
 
 # Dictionary mapping each resource-type to the list of created resource-instance names
 creates_of_type[resource_type] = makes {
-	all = instance_names_of_type[resource_type]
-	makes = {name | all[_] = name; obj = instance[name]; is_create(obj, true)}
+	all := instance_names_of_type[resource_type]
+	makes := {name | all[_] = name; obj = instance[name]; is_create(obj, true)}
 }
 
 # Function defining whether a resource-instance is a creation
@@ -113,8 +113,8 @@ num_modifies_of_type[resource_type] = num {
 
 # Dictionary mapping each resource-type to the list of modified resource-instance names
 modifies_of_type[resource_type] = mods {
-	all = instance_names_of_type[resource_type]
-	mods = {name | all[_] = name; obj = instance[name]; is_modify(obj, true)}
+	all := instance_names_of_type[resource_type]
+	mods := {name | all[_] = name; obj = instance[name]; is_modify(obj, true)}
 }
 
 # Function defining whether a resource-instance is a modification
