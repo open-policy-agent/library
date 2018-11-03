@@ -36,4 +36,3 @@ mtls_enabled {
 	mesh_config = yaml.unmarshal(cm.data.mesh)
 	mesh_config.authPolicy = "MUTUAL_TLS"
 }
-

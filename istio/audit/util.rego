@@ -17,4 +17,3 @@ is_sidecar_injected(pod) {
 	pod.metadata.annotations["sidecar.istio.io/status"]
 	pod.spec.containers[_].name = "istio-proxy"
 }
-

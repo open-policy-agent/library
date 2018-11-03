@@ -23,4 +23,3 @@ info[result] {
 		"num_in_mesh_pods": num_in_mesh_pods,
 	}
 }
-

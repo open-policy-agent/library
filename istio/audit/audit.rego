@@ -25,4 +25,3 @@ warning[result] {
 error[result] {
 	vetter[_].error[result]
 }
-

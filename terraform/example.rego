@@ -49,4 +49,3 @@ touches_iam {
 	count(all, c)
 	c > 0
 }
-

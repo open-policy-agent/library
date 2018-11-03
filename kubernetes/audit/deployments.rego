@@ -13,4 +13,3 @@ warning[result] {
 		"namespace": namespace,
 	}
 }
-

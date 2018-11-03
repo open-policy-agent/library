@@ -20,4 +20,3 @@ test_mix {
 	example.authz = true with input as i
 	example.score = 12 with input as i
 }
-
