@@ -122,4 +122,3 @@ is_modify(obj) {
 	obj.destroy = false
 	not obj.id
 }
-

@@ -28,4 +28,3 @@ verify {
 	allowSizeIncrease
 	boundClaim
 }
-

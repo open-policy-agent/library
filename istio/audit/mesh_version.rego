@@ -64,4 +64,3 @@ get_version(image) = "latest" {
 	num_parts = count(parts)
 	num_parts < 2
 }
-

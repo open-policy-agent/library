@@ -195,4 +195,3 @@ simple_example = {"SecurityGroups": [
 		"VpcId": "vpc-a123456",
 	},
 ]}
-

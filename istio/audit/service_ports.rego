@@ -27,4 +27,3 @@ service_port_prefixes = {
 	"redis": "redis-",
 	"tcp": "tcp-",
 }
-

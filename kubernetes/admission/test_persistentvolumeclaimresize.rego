@@ -25,4 +25,3 @@ test_fail3 {
 	r = persistentvolumeclaims.attributes_fail_3
 	not persistentvolumeclaimresize.boundClaim with input as r
 }
-

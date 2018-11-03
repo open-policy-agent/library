@@ -29,4 +29,3 @@ invalid_host_volume_paths[host_path] {
 valid_host_path_prefixes = {"allowed", "also/allowed"}
 
 invalid_host_path_prefixes = {"forbidden", "also/forbidden"}
-

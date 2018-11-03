@@ -5,4 +5,3 @@ host_volume_paths(host_config) = {trimmed |
 	split(bind, ":", parts)
 	trim(parts[0], "/", trimmed)
 }
-

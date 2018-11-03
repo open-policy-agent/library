@@ -166,4 +166,3 @@ has_prohibited_port_open(obj) {
 	from <= port
 	port <= to
 }
-

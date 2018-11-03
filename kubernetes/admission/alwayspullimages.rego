@@ -40,4 +40,3 @@ overwrite[path] = "Always" {
 	not container.imagePullPolicy
 	path = sprintf("spec.initContainers[%v].imagePullPolicy", [i])
 }
-

@@ -8,4 +8,3 @@ test_simple_sg {
 	results = example.output with input as i
 	results.SecurityGroupScore["sg-1"] = 21
 }
-

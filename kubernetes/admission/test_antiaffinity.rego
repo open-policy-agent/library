@@ -12,4 +12,3 @@ test_nonadmit {
 	r = pods.affinity2
 	antiaffinity.admit = false with input as r
 }
-

@@ -13,4 +13,3 @@ test_overwrites {
 	overwrites = alwayspullimages.overwrite with input as r
 	count(overwrites, 2)
 }
-

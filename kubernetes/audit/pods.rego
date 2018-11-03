@@ -185,4 +185,3 @@ missing_resources(container) {
 missing_resources(container) {
 	not container.resources.requests.memory
 }
-

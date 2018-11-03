@@ -17,4 +17,3 @@ invalid_anti_affinity {
 }
 
 allowed_topology_keys = {"kubernetes.io/hostname"}
-

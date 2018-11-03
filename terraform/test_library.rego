@@ -60,4 +60,3 @@ has_non_zero_value(dictionary) {
 	dictionary[_] = x
 	x != 0
 }
-
