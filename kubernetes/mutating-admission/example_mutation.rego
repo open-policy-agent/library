@@ -11,7 +11,7 @@ patch[patchCode] {
 	isValidRequest
 	isCreateOrUpdate
 	input.request.kind.kind == "Dog"
-	not hasLabelValue[["foo", "bar"]] with input as input.request.object
+	not hasLabelValue("foo", "bar") with input as input.request.object
 	patchCode = makeLabelPatch("add", "foo", "bar", "")
 }
 
@@ -20,8 +20,8 @@ patch[patchCode] {
 	isValidRequest
 	isCreateOrUpdate
 	input.request.kind.kind == "Dog"
-	hasLabelValue[["foo", "bar"]] with input as input.request.object
-	not hasLabelValue[["baz", "quux"]] with input as input.request.object
+	hasLabelValue("foo", "bar") with input as input.request.object
+	not hasLabelValue("baz", "quux") with input as input.request.object
 	patchCode = makeLabelPatch("add", "baz", "quux", "")
 }
 
@@ -30,7 +30,7 @@ patch[patchCode] {
 	isValidRequest
 	isCreateOrUpdate
 	input.request.kind.kind == "Dog"
-	hasLabelValue[["moar-labels", "pleez"]] with input as input.request.object
+	hasLabelValue("moar-labels", "pleez") with input as input.request.object
 	patchCode = makeLabelPatch("add", "quuz", "corge", "")
 }
 
@@ -39,6 +39,6 @@ patch[patchCode] {
 	isValidRequest
 	isCreateOrUpdate
 	input.request.kind.kind == "Dog"
-	not hasAnnotation.rating with input as input.request.object
+	not hasAnnotation("rating") with input as input.request.object
 	patchCode = makeAnnotationPatch("add", "rating", "14/10", "")
 }

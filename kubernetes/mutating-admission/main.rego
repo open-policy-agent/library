@@ -80,13 +80,11 @@ hasLabels {
 	input.metadata.labels
 }
 
-hasLabel[label] {
-	hasLabels
+hasLabel(label) {
 	input.metadata.labels[label]
 }
 
-hasLabelValue[[key, val]] {
-	hasLabels
+hasLabelValue(key, val) {
 	input.metadata.labels[key] = val
 }
 
@@ -94,13 +92,11 @@ hasAnnotations {
 	input.metadata.annotations
 }
 
-hasAnnotation[annotation] {
-	hasAnnotations
+hasAnnotation(annotation) {
 	input.metadata.annotations[annotation]
 }
 
-hasAnnotationValue[[key, val]] {
-	hasAnnotations
+hasAnnotationValue(key, val) {
 	input.metadata.annotations[key] = val
 }
 

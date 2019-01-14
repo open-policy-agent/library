@@ -24,21 +24,21 @@ test_no_labels_true {
 # Test: hasLabel is true when the label exists
 #-----------------------------------------------------------
 test_hasLabel_foo {
-	hasLabel.foo with input as k8s.object_with_label_foo_bar
+	hasLabel("foo") with input as k8s.object_with_label_foo_bar
 }
 
 #-----------------------------------------------------------
 # Test: hasLabel is false when the label doesn't exist
 #-----------------------------------------------------------
 test_not_hasLabel_foo1 {
-	not hasLabel.foo1 with input as k8s.object_with_label_foo_bar
+	not hasLabel("foo1") with input as k8s.object_with_label_foo_bar
 }
 
 #-----------------------------------------------------------
 # Test: hasLabelValue is true when the label has the correct value
 #-----------------------------------------------------------
 test_hasLabelValue_fooeqbar {
-	hasLabelValue[["foo", "bar"]] with input as k8s.object_with_label_foo_bar
+	hasLabelValue("foo", "bar") with input as k8s.object_with_label_foo_bar
 }
 
 #-----------------------------------------------------------
@@ -59,21 +59,21 @@ test_no_annotations_true {
 # Test: hasAnnotation is true when the annotation exists
 #-----------------------------------------------------------
 test_hasAnnotation_foo {
-	hasAnnotation.foo with input as k8s.object_with_annotation_foo_bar
+	hasAnnotation("foo") with input as k8s.object_with_annotation_foo_bar
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotation is false when the annotation doesn't exist
 #-----------------------------------------------------------
 test_not_hasAnnotation_foo1 {
-	not hasAnnotation.foo1 with input as k8s.object_with_annotation_foo_bar
+	not hasAnnotation("foo1") with input as k8s.object_with_annotation_foo_bar
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotationValue is true when the annotation has the correct value
 #-----------------------------------------------------------
 test_hasAnnotation_fooeqbar {
-	hasAnnotationValue[["foo", "bar"]] with input as k8s.object_with_annotation_foo_bar
+	hasAnnotationValue("foo", "bar") with input as k8s.object_with_annotation_foo_bar
 }
 
 #-----------------------------------------------------------
@@ -83,7 +83,7 @@ test_makeLabelPatch {
 	l := makeLabelPatch("add", "foo", "bar", "") with input as k8s.object_with_label_foo_bar
 	l = {"op": "add", "path": "/metadata/labels/foo", "value": "bar"}
 
-	# test pathPrefix
+	# test pathPrefix e.g. if the label is on the Pod template in a Deployment
 	m := makeLabelPatch("add", "foo", "bar", "/spec/template") with input as k8s.object_with_label_foo_bar
 	m = {"op": "add", "path": "/spec/template/metadata/labels/foo", "value": "bar"}
 }
