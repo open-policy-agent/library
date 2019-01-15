@@ -71,9 +71,9 @@ isUpdate {
 # can apply to various sub-objects within a request
 # So from the context of an AdmissionRequest they need to
 # be called like
-#   hasLabelValue[["foo", "bar"]] with input as input.request.object
+#   hasLabelValue("foo", "bar") with input as input.request.object
 # or
-#   hasLabelValue[["foo", "bar"]] with input as input.request.oldObject
+#   hasLabelValue("foo", "bar") with input as input.request.oldObject
 ###########################################################################
 
 hasLabels {
