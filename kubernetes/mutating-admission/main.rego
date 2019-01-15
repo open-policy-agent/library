@@ -76,28 +76,28 @@ isUpdate {
 #   hasLabelValue("foo", "bar") with input as input.request.oldObject
 ###########################################################################
 
-hasLabels {
-	input.metadata.labels
+hasLabels(obj) {
+	obj.metadata.labels
 }
 
-hasLabel(label) {
-	input.metadata.labels[label]
+hasLabel(obj, label) {
+	obj.metadata.labels[label]
 }
 
-hasLabelValue(key, val) {
-	input.metadata.labels[key] = val
+hasLabelValue(obj, key, val) {
+	obj.metadata.labels[key] = val
 }
 
-hasAnnotations {
-	input.metadata.annotations
+hasAnnotations(obj) {
+	obj.metadata.annotations
 }
 
-hasAnnotation(annotation) {
-	input.metadata.annotations[annotation]
+hasAnnotation(obj, annotation) {
+	obj.metadata.annotations[annotation]
 }
 
-hasAnnotationValue(key, val) {
-	input.metadata.annotations[key] = val
+hasAnnotationValue(obj, key, val) {
+	obj.metadata.annotations[key] = val
 }
 
 ###########################################################################

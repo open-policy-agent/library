@@ -10,4 +10,4 @@ When adding a label or annotation to some object's metadata Kubernetes requires 
 
 ## Helper functions
 
-A common use case for mutating admission controllers is adding or modifying labels and annotations, so a small set of helper functions is provided to aid readability. See `example_mutation.reg` for some examples.
+A common use case for mutating admission controllers is adding or modifying labels and annotations, so a small set of helper functions is provided to aid readability. See `example_mutation.rego` for some examples.
