@@ -10,70 +10,70 @@ import data.library.kubernetes.admission.mutating.test as k8s
 # Test: hasLabels is true when there are labels
 #-----------------------------------------------------------
 test_hasLabels_true {
-	hasLabels with input as k8s.object_with_label_foo_bar
+	hasLabels(k8s.object_with_label_foo_bar)
 }
 
 #-----------------------------------------------------------
 # Test: hasLabels is false when there are no labels
 #-----------------------------------------------------------
 test_no_labels_true {
-	not hasLabels with input as k8s.object_without_labels
+	not hasLabels(k8s.object_without_labels)
 }
 
 #-----------------------------------------------------------
 # Test: hasLabel is true when the label exists
 #-----------------------------------------------------------
 test_hasLabel_foo {
-	hasLabel("foo") with input as k8s.object_with_label_foo_bar
+	hasLabel(k8s.object_with_label_foo_bar, "foo")
 }
 
 #-----------------------------------------------------------
 # Test: hasLabel is false when the label doesn't exist
 #-----------------------------------------------------------
 test_not_hasLabel_foo1 {
-	not hasLabel("foo1") with input as k8s.object_with_label_foo_bar
+	not hasLabel(k8s.object_with_label_foo_bar, "foo1")
 }
 
 #-----------------------------------------------------------
 # Test: hasLabelValue is true when the label has the correct value
 #-----------------------------------------------------------
 test_hasLabelValue_fooeqbar {
-	hasLabelValue("foo", "bar") with input as k8s.object_with_label_foo_bar
+	hasLabelValue(k8s.object_with_label_foo_bar, "foo", "bar")
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotations is true when there are annotations
 #-----------------------------------------------------------
 test_hasAnnotations_true {
-	hasAnnotations with input as k8s.object_with_annotation_foo_bar
+	hasAnnotations(k8s.object_with_annotation_foo_bar)
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotations is false when there are no annotations
 #-----------------------------------------------------------
 test_no_annotations_true {
-	not hasAnnotations with input as k8s.object_without_annotations
+	not hasAnnotations(k8s.object_without_annotations)
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotation is true when the annotation exists
 #-----------------------------------------------------------
 test_hasAnnotation_foo {
-	hasAnnotation("foo") with input as k8s.object_with_annotation_foo_bar
+	hasAnnotation(k8s.object_with_annotation_foo_bar, "foo")
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotation is false when the annotation doesn't exist
 #-----------------------------------------------------------
 test_not_hasAnnotation_foo1 {
-	not hasAnnotation("foo1") with input as k8s.object_with_annotation_foo_bar
+	not hasAnnotation(k8s.object_with_annotation_foo_bar, "foo1")
 }
 
 #-----------------------------------------------------------
 # Test: hasAnnotationValue is true when the annotation has the correct value
 #-----------------------------------------------------------
 test_hasAnnotation_fooeqbar {
-	hasAnnotationValue("foo", "bar") with input as k8s.object_with_annotation_foo_bar
+	hasAnnotationValue(k8s.object_with_annotation_foo_bar, "foo", "bar")
 }
 
 #-----------------------------------------------------------
