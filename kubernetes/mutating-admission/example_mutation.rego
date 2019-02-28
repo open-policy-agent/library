@@ -39,6 +39,6 @@ patch[patchCode] {
 	isValidRequest
 	isCreateOrUpdate
 	input.request.kind.kind == "Dog"
-	not hasAnnotation(input.request.object, "rating")
-	patchCode = makeAnnotationPatch("add", "rating", "14/10", "")
+	not hasAnnotation(input.request.object, "dogs.io/rating")
+	patchCode = makeAnnotationPatch("add", "dogs.io/rating", "14/10", "")
 }

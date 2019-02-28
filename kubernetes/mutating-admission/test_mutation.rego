@@ -127,7 +127,7 @@ patchCode_annotations_base = {
 
 patchCode_annotation_rating = {
 	"op": "add",
-	"path": "/metadata/annotations/rating",
+	"path": "/metadata/annotations/dogs.io~1rating",
 	"value": "14/10",
 }
 
@@ -147,7 +147,7 @@ test_main_dog_no_labels_or_annotations {
 	res := main with input as k8s.request_dog_no_labels_or_annotations
 	res.response.allowed = true
 	isPatchResponse(res)
-	patches = json.unmarshal(base64url.decode(res.response.patch))
+	patches = json.unmarshal(base64.decode(res.response.patch))
 	trace(sprintf("[test_main_dog_no_labels] patches = '%s'", [patches]))
 	hasPatch(patches, patchCode_labels_base)
 	hasPatch(patches, patchCode_label_foobar)
@@ -162,7 +162,7 @@ test_main_dog_some_labels {
 	res := main with input as k8s.request_dog_some_labels_and_annotations
 	res.response.allowed = true
 	isPatchResponse(res)
-	patches = json.unmarshal(base64url.decode(res.response.patch))
+	patches = json.unmarshal(base64.decode(res.response.patch))
 	trace(sprintf("[test_main_dog_some_labels] patches = '%s'", [patches]))
 	not hasPatch(patches, patchCode_labels_base)
 	hasPatch(patches, patchCode_label_foobar)
@@ -191,7 +191,7 @@ t_main_dog_existing_labels_and_annotations_detail {
 t_main_dog_existing_labels_and_annotations_detail {
 	input.response.patchType = "JSONPatch"
 	input.response.patch
-	patches = json.unmarshal(base64url.decode(input.response.patch))
+	patches = json.unmarshal(base64.decode(input.response.patch))
 	trace(sprintf("[t_main_dog_existing_labels_and_annotations] patches = '%s'", [patches]))
 	not hasPatch(patches, patchCode_labels_base)
 	not hasPatch(patches, patchCode_label_foobar)
@@ -207,7 +207,7 @@ test_main_dog_missing_label_quuzcorge {
 	res := main with input as k8s.request_dog_some_labels_and_annotations
 	res.response.allowed = true
 	res.response.patchType = "JSONPatch"
-	patches = json.unmarshal(base64url.decode(res.response.patch))
+	patches = json.unmarshal(base64.decode(res.response.patch))
 	trace(sprintf("[test_main_dog_good_missing_label_quuzcorge] patches = '%s'", [patches]))
 	hasPatch(patches, patchCode_label_quuzcorge)
 }
@@ -219,7 +219,7 @@ test_main_dog_add_first_annotation {
 	res := main with input as k8s.request_dog_no_labels_or_annotations
 	res.response.allowed = true
 	res.response.patchType = "JSONPatch"
-	patches = json.unmarshal(base64url.decode(res.response.patch))
+	patches = json.unmarshal(base64.decode(res.response.patch))
 	trace(sprintf("[test_main_dog_add_first_annotation] patches = '%s'", [patches]))
 	hasPatch(patches, patchCode_annotations_base)
 	hasPatch(patches, patchCode_annotation_rating)
@@ -232,7 +232,7 @@ test_main_dog_add_subsequent_annotation {
 	res := main with input as k8s.request_dog_some_labels_and_annotations
 	res.response.allowed = true
 	res.response.patchType = "JSONPatch"
-	patches = json.unmarshal(base64url.decode(res.response.patch))
+	patches = json.unmarshal(base64.decode(res.response.patch))
 	trace(sprintf("[test_main_dog_add_subsequent_annotation] patches = '%s'", [patches]))
 	not hasPatch(patches, patchCode_annotations_base)
 	hasPatch(patches, patchCode_annotation_rating)

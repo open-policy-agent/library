@@ -199,7 +199,7 @@ request_dog_existing_labels_and_annotations = {
 			"apiVersion": "frens.teq0.com/v1",
 			"kind": "Dog",
 			"metadata": {
-				"annotations": {"rating": "14/10"},
+				"annotations": {"dogs.io/rating": "14/10"},
 				"labels": {
 					"foo": "bar",
 					"quuz": "corge",
