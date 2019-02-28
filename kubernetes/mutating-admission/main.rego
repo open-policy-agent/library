@@ -38,7 +38,7 @@ response = x {
 	x := {
 		"allowed": true,
 		"patchType": "JSONPatch",
-		"patch": base64url.encode(json.marshal(fullPatches)),
+		"patch": base64.encode(json.marshal(fullPatches)),
 	}
 }
 
@@ -111,7 +111,7 @@ hasAnnotationValue(obj, key, val) {
 makeLabelPatch(op, key, value, pathPrefix) = patchCode {
 	patchCode = {
 		"op": op,
-		"path": concat("/", [pathPrefix, "metadata/labels", key]),
+		"path": concat("/", [pathPrefix, "metadata/labels", replace(key, "/", "~1")]),
 		"value": value,
 	}
 }
@@ -119,7 +119,7 @@ makeLabelPatch(op, key, value, pathPrefix) = patchCode {
 makeAnnotationPatch(op, key, value, pathPrefix) = patchCode {
 	patchCode = {
 		"op": op,
-		"path": concat("/", [pathPrefix, "metadata/annotations", key]),
+		"path": concat("/", [pathPrefix, "metadata/annotations", replace(key, "/", "~1")]),
 		"value": value,
 	}
 }
