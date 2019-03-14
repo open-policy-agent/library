@@ -241,6 +241,16 @@ test_main_dog_add_subsequent_annotation {
 #-----------------------------------------------------------
 # Test: ensureParentPathsExist
 #-----------------------------------------------------------
+test_ensureParentPathsExist_array {
+	actual := ensureParentPathsExist([
+		{"op":"replace","path":"/spec/template/spec/containers/0/imagePullPolicy","value":"IfNotPresent"}
+	])
+	with input as {"request": {"object": {"spec": {"template": {"spec": {"containers": [{"foo": "bar"}]}}}}}}
+	correct := [
+		{"op":"replace","path":"/spec/template/spec/containers/0/imagePullPolicy","value":"IfNotPresent"}
+	]
+	actual == correct
+}
 test_ensureParentPathsExist_noop {
 	actual := ensureParentPathsExist([
 		{"op": "add", "path": "/metadata/labels/foo", "value": "bar"}

@@ -138,7 +138,8 @@ ensureParentPathsExist(patches) = result {
 		i > 0    # skip initial element
 		# array of all elements in path up to i
 		prefixPath := [pathArray[j] | pathArray[j]; j < i; j > 0]  # j > 0: skip initial element
-		not inputPathExists(prefixPath) with input as input.request.object
+		walkPath := [toWalkElement(x) | x := prefixPath[_]]
+		not inputPathExists(walkPath) with input as input.request.object
 	}
 	# Sort paths, to ensure they apply in correct order
 	ordered_paths := sort(missingPaths)
@@ -153,6 +154,14 @@ ensureParentPathsExist(patches) = result {
 # Check that the given @path exists as part of the input object.
 inputPathExists(path) {
 	walk(input, [path, _])
+}
+
+toWalkElement(str) = str {
+	not re_match("^[0-9]+$", str)
+}
+toWalkElement(str) = x {
+	re_match("^[0-9]+$", str)
+	x := to_number(str)
 }
 
 # Dummy deny and patch to please the compiler
