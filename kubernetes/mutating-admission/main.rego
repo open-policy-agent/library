@@ -128,26 +128,31 @@ makeAnnotationPatch(op, key, value, pathPrefix) = patchCode {
 ensureParentPathsExist(patches) = result {
 	# Convert patches to a set
 	paths := {p.path | p := patches[_]}
+
 	# Compute all missing subpaths.
 	#    Iterate over all paths and over all subpaths
 	#    If subpath doesn't exist, add it to the set after making it a string
 	missingPaths := {sprintf("/%s", [concat("/", prefixPath)]) |
 		paths[path]
 		pathArray := split(path, "/")
-		pathArray[i]  # walk over path
-		i > 0    # skip initial element
+		pathArray[i] # walk over path
+		i > 0 # skip initial element
+
 		# array of all elements in path up to i
-		prefixPath := [pathArray[j] | pathArray[j]; j < i; j > 0]  # j > 0: skip initial element
+		prefixPath := [pathArray[j] | pathArray[j]; j < i; j > 0] # j > 0: skip initial element
 		walkPath := [toWalkElement(x) | x := prefixPath[_]]
 		not inputPathExists(walkPath) with input as input.request.object
 	}
+
 	# Sort paths, to ensure they apply in correct order
 	ordered_paths := sort(missingPaths)
 
 	# Return new patches prepended to original patches.
 	#  Don't forget to prepend all paths with a /
 	new_patches := [{"op": "add", "path": p, "value": {}} |
-			         p := ordered_paths[_] ]
+		p := ordered_paths[_]
+	]
+
 	result := array.concat(new_patches, patches)
 }
 
@@ -159,6 +164,7 @@ inputPathExists(path) {
 toWalkElement(str) = str {
 	not re_match("^[0-9]+$", str)
 }
+
 toWalkElement(str) = x {
 	re_match("^[0-9]+$", str)
 	x := to_number(str)
