@@ -3,7 +3,7 @@ package library.kubernetes.admission.mutating
 import data.library.kubernetes.admission.mutating.test as k8s
 
 ############################################################
-# PATCH helper tests 
+# PATCH helper tests
 ############################################################
 
 #-----------------------------------------------------------
@@ -89,7 +89,7 @@ test_makeLabelPatch {
 }
 
 ############################################################
-# PATCH tests 
+# PATCH tests
 ############################################################
 
 #-----------------------------------------------------------
@@ -173,7 +173,7 @@ test_main_dog_some_labels {
 #-----------------------------------------------------------
 # Test: patches are not created for Dogs with existing labels foo and quuz and annotation rating
 # We need to test for either no patches at all are created, or
-# if some other rule creates some patches, it's not trying to 
+# if some other rule creates some patches, it's not trying to
 # add any that already exist
 #-----------------------------------------------------------
 test_main_dog_existing_labels_and_annotations {
@@ -237,3 +237,89 @@ test_main_dog_add_subsequent_annotation {
 	not hasPatch(patches, patchCode_annotations_base)
 	hasPatch(patches, patchCode_annotation_rating)
 }
+
+#-----------------------------------------------------------
+# Test: ensureParentPathsExist
+#-----------------------------------------------------------
+test_ensureParentPathsExist_noop {
+	actual := ensureParentPathsExist([
+		{"op": "add", "path": "/metadata/labels/foo", "value": "bar"}
+		])
+		with input as k8s.request_dog_some_labels_and_annotations
+	correct := [
+		{"op": "add", "path": "/metadata/labels/foo", "value": "bar"}
+	]
+	actual == correct
+}
+
+test_ensureParentPathsExist_noop_multi {
+	actual := ensureParentPathsExist([
+		{"op": "add", "path": "/metadata/labels/foo", "value": "bar"},
+		{"op": "add", "path": "/metadata/labels/bar", "value": "bar"}
+		])
+		with input as k8s.request_dog_some_labels_and_annotations
+	correct := [
+		{"op": "add", "path": "/metadata/labels/foo", "value": "bar"},
+		{"op": "add", "path": "/metadata/labels/bar", "value": "bar"}
+	]
+	actual == correct
+}
+
+test_ensureParentPathsExist_simple {
+	actual := ensureParentPathsExist([
+		{"op": "add", "path": "/metadata/labels/foo/bar", "value": "baz"}
+		])
+		with input as k8s.request_dog_some_labels_and_annotations
+	correct := [
+		{"op": "add", "path": "/metadata/labels/foo", "value": {}},
+		{"op": "add", "path": "/metadata/labels/foo/bar", "value": "baz"}
+	]
+	actual == correct
+}
+
+test_ensureParentPathsExist_simple_multi {
+	actual := ensureParentPathsExist([
+		{"op": "add", "path": "/metadata/labels/foo/bar", "value": "baz"},
+		{"op": "add", "path": "/metadata/labels/foo/baz", "value": "baz"}
+		])
+		with input as k8s.request_dog_some_labels_and_annotations
+	correct := [
+		{"op": "add", "path": "/metadata/labels/foo", "value": {}},
+		{"op": "add", "path": "/metadata/labels/foo/bar", "value": "baz"},
+		{"op": "add", "path": "/metadata/labels/foo/baz", "value": "baz"}
+	]
+	actual == correct
+}
+
+test_ensureParentPathsExist_long_multi {
+	actual := ensureParentPathsExist([
+		{"op": "add", "path": "/metadata/labels/foo/bar/abc", "value": "def"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/baz/qux", "value": "abc"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/baz/abc", "value": "def"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/def", "value": "ghi"},
+		{"op": "add", "path": "/metadata/annot/foo/bar/def", "value": "ghi"},
+		{"op": "add", "path": "/root/foo/bar/def", "value": "ghi"}
+		])
+		with input as k8s.request_dog_some_labels_and_annotations
+	correct := [
+		# new
+		{"op": "add", "path": "/metadata/annot", "value": {}},
+		{"op": "add", "path": "/metadata/annot/foo", "value": {}},
+		{"op": "add", "path": "/metadata/annot/foo/bar", "value": {}},
+		{"op": "add", "path": "/metadata/labels/foo", "value": {}},
+		{"op": "add", "path": "/metadata/labels/foo/bar", "value": {}},
+		{"op": "add", "path": "/metadata/labels/foo/bar/baz", "value": {}},
+		{"op": "add", "path": "/root", "value": {}},
+		{"op": "add", "path": "/root/foo", "value": {}},
+		{"op": "add", "path": "/root/foo/bar", "value": {}},
+		# originals
+		{"op": "add", "path": "/metadata/labels/foo/bar/abc", "value": "def"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/baz/qux", "value": "abc"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/baz/abc", "value": "def"},
+		{"op": "add", "path": "/metadata/labels/foo/bar/def", "value": "ghi"},
+		{"op": "add", "path": "/metadata/annot/foo/bar/def", "value": "ghi"},
+		{"op": "add", "path": "/root/foo/bar/def", "value": "ghi"}
+	]
+	actual == correct
+}
+

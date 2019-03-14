@@ -43,7 +43,7 @@ response = x {
 }
 
 isValidRequest {
-	# not sure if this might be a race condition, it might get called before 
+	# not sure if this might be a race condition, it might get called before
 	# all the validation rules have been run
 	count(deny) = 0
 }
@@ -65,9 +65,9 @@ isUpdate {
 }
 
 ###########################################################################
-# PATCH helpers 
+# PATCH helpers
 # Note: These rules assume that the input is an object
-# not an AdmissionRequest, because labels and annotations 
+# not an AdmissionRequest, because labels and annotations
 # can apply to various sub-objects within a request
 # So from the context of an AdmissionRequest they need to
 # be called like
@@ -103,7 +103,7 @@ hasAnnotationValue(obj, key, val) {
 ###########################################################################
 # makeLabelPatch creates a label patch
 # Labels can exist on numerous child objects e.g. Deployment.template.metadata
-# Use pathPrefix to specify a lower level object, or pass "" to select the 
+# Use pathPrefix to specify a lower level object, or pass "" to select the
 # top level object
 # Note: pathPrefix should have a leading '/' but no trailing '/'
 ###########################################################################
@@ -126,35 +126,28 @@ makeAnnotationPatch(op, key, value, pathPrefix) = patchCode {
 
 # Given array of JSON patches create and prepend new patches that create missing paths.
 ensureParentPathsExist(patches) = result {
+	# Convert patches to a set
 	paths := {p.path | p := patches[_]}
-	newPatches := {makePath(prefixArray) |
+	# Compute all missing subpaths.
+	#    Iterate over all paths and over all subpaths
+	#    If subpath doesn't exist, add it to the set after making it a string
+	missingPaths := {sprintf("/%s", [concat("/", prefixPath)]) |
 		paths[path]
-		fullLength := count(path)
 		pathArray := split(path, "/")
-
-		# Need a slice of the path_array with all but the last element.
-		# No way to do that with arrays, but we can do it with strings.
-		arrayLength := count(pathArray)
-		lastElementLength := count(pathArray[minus(arrayLength, 1)])
-
-		# this assumes paths starts with '/'
-		prefixPath := substring(path, 1, (fullLength - lastElementLength) - 2)
-		prefixArray := split(prefixPath, "/")
-		not inputPathExists(prefixArray) with input as input.request.object
+		pathArray[i]  # walk over path
+		i > 0    # skip initial element
+		# array of all elements in path up to i
+		prefixPath := [pathArray[j] | pathArray[j]; j < i; j > 0]  # j > 0: skip initial element
+		not inputPathExists(prefixPath) with input as input.request.object
 	}
+	# Sort paths, to ensure they apply in correct order
+	ordered_paths := sort(missingPaths)
 
-	result := array.concat(cast_array(newPatches), patches)
-}
-
-# Create the JSON patch to ensure the @path_array exists
-makePath(pathArray) = result {
-	pathStr := concat("/", array.concat([""], pathArray))
-
-	result = {
-		"op": "add",
-		"path": pathStr,
-		"value": {},
-	}
+	# Return new patches prepended to original patches.
+	#  Don't forget to prepend all paths with a /
+	new_patches := [{"op": "add", "path": p, "value": {}} |
+			         p := ordered_paths[_] ]
+	result := array.concat(new_patches, patches)
 }
 
 # Check that the given @path exists as part of the input object.
