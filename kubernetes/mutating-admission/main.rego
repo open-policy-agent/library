@@ -15,7 +15,7 @@ default response = {"allowed": true}
 
 # non-patch response i.e. validation response
 response = x {
-	count(patch) = 0
+	count(patch) == 0
 
 	x := {
 		"allowed": false,
@@ -45,7 +45,7 @@ response = x {
 isValidRequest {
 	# not sure if this might be a race condition, it might get called before
 	# all the validation rules have been run
-	count(deny) = 0
+	count(deny) == 0
 }
 
 isCreateOrUpdate {
