@@ -8,7 +8,7 @@ import data.library.kubernetes.admission.loadbalancer
 #   whitelisted
 deny[explanation] {
 	input.request.kind.kind == "Service"
-	input.request.operation = "CREATE"
+	input.request.operation == "CREATE"
 	loadbalancer.is_external_lb
 	not whitelisted
 	namespace := input.request.namespace
