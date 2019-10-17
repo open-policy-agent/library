@@ -60,8 +60,7 @@ warning[result] {
 	containers[[namespace, name, container]]
 	dropped = {cap | cap = container.securityContext.capabilities.drop[_]}
 	remaining = recommended_cap_drop - dropped
-	count(remaining, n)
-	n > 1
+	count(remaining) > 0
 	result = {
 		"type": "bad-cap-not-dropped",
 		"name": name,
@@ -75,8 +74,7 @@ warning[result] {
 	containers[[namespace, name, container]]
 	added = {cap | cap = container.securityContext.capabilities.add[_]}
 	remaining = recommended_cap_drop & added
-	count(remaining, n)
-	n > 1
+	count(remaining) > 0
 	result = {
 		"type": "bad-cap-added",
 		"name": name,
