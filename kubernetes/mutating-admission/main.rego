@@ -4,14 +4,21 @@ package library.kubernetes.admission.mutating
 # Implementation of the k8s admission control external webhook interface,
 # combining validating and mutating admission controllers
 ###########################################################################
+default apiVersion = "admission.k8s.io/v1beta1"
+
+apiVersion = input.apiVersion
+
+# missing uid defaults to empty string
+# this will produce a warning in kube apiserver logs
+default response_uid = ""
+
+response_uid = input.request.uid
 
 main = {
-	"apiVersion": "admission.k8s.io/v1beta1",
+	"apiVersion": apiVersion,
 	"kind": "AdmissionReview",
 	"response": response,
 }
-
-default response = {"allowed": true}
 
 # non-patch response i.e. validation response
 response = x {
@@ -19,6 +26,7 @@ response = x {
 
 	x := {
 		"allowed": false,
+		"uid": response_uid,
 		"status": {"reason": reason},
 	}
 
@@ -27,7 +35,7 @@ response = x {
 }
 
 # patch response i.e. mutating respone
-response = x {
+else = x {
 	count(patch) > 0
 
 	# if there are missing leaves e.g. trying to add a label to something that doesn't
@@ -37,8 +45,17 @@ response = x {
 
 	x := {
 		"allowed": true,
+		"uid": response_uid,
 		"patchType": "JSONPatch",
 		"patch": base64.encode(json.marshal(fullPatches)),
+	}
+}
+
+# default response
+else = x {
+	x := {
+		"allowed": true,
+		"uid": response_uid,
 	}
 }
 

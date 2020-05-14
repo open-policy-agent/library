@@ -102,9 +102,9 @@ endpoint = {
 	},
 }
 
-gen_input(type, annotations, namespace, name) = x {
+gen_input(type, annotations, namespace, name, apiVersion, uid) = x {
 	x = {
-		"apiVersion": "admission.k8s.io/v1beta1",
+		"apiVersion": apiVersion,
 		"kind": "AdmissionReview",
 		"request": {
 			"kind": {
@@ -143,7 +143,7 @@ gen_input(type, annotations, namespace, name) = x {
 				"resource": "services",
 				"version": "v1",
 			},
-			"uid": "0aa3158e-dc93-11e8-9aa6-080027ca3112",
+			"uid": uid,
 			"userInfo": {
 				"groups": [
 					"system:masters",

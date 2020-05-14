@@ -2,7 +2,7 @@ package library.kubernetes.admission.mutating.test
 
 request_default = {
 	"kind": "AdmissionReview",
-	"apiVersion": "admission.k8s.io/v1beta1",
+	"apiVersion": "admission.k8s.io/v1",
 	"request": {""},
 }
 
