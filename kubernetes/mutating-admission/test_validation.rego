@@ -3,7 +3,7 @@ package library.kubernetes.admission.mutating
 import data.library.kubernetes.admission.mutating.test as k8s
 
 ############################################################
-# DENY tests 
+# DENY tests
 ############################################################
 
 #-----------------------------------------------------------
@@ -12,6 +12,8 @@ import data.library.kubernetes.admission.mutating.test as k8s
 test_main_default_allow {
 	res := main with input as k8s.request_default
 	res.response.allowed
+	res.response.uid == ""
+	res.apiVersion == "admission.k8s.io/v1"
 }
 
 #-----------------------------------------------------------

@@ -28,20 +28,36 @@ whitelisted {
 ############################################################
 # Boilerplate--implementation of the k8s admission control external webhook interface.
 # No need to modify the code below.
+default apiVersion = "admission.k8s.io/v1beta1"
+
+apiVersion = input.apiVersion
+
+# missing uid defaults to empty string
+# this will produce a warning in kube apiserver logs
+default response_uid = ""
+
+response_uid = input.request.uid
+
 main = {
-	"apiVersion": "admission.k8s.io/v1beta1",
+	"apiVersion": apiVersion,
 	"kind": "AdmissionReview",
 	"response": response,
 }
 
-default response = {"allowed": true}
-
 response = x {
 	x := {
 		"allowed": false,
+		"uid": response_uid,
 		"status": {"reason": reason},
 	}
 
 	reason = concat(", ", deny)
 	reason != ""
+}
+
+else = x {
+	x := {
+		"allowed": true,
+		"uid": response_uid,
+	}
 }
