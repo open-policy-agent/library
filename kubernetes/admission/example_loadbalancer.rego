@@ -10,7 +10,7 @@ deny[explanation] {
 	loadbalancer.is_external_lb
 	namespace := input.request.namespace
 	name := input.request.object.metadata.name
-	not whitelisted[{"namespace": namespace, "name": name}]
+	not whitelisted[{"name": name, "namespace": namespace}]
 	explanation = sprintf("Service %v/%v is an external load balancer but has not been whitelisted", [namespace, name])
 }
 

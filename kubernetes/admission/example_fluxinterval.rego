@@ -5,29 +5,37 @@ package library.kubernetes.validating.fluxinterval
 image := "fluxcd/flux"
 
 deny[msg] {
+	some i
+
 	# Ensure only applies to flux images
-	containerImage := input.spec.template.spec.containers[i].image
-	contains(containerImage, image)
+	container := input.spec.template.spec.containers[i]
+	contains(container.image, image)
 
-	# Check if git poll interval arg is present
-	args := input.spec.template.spec.containers[_].args
-	contains(args[_], "--git-poll-interval")
+	some j
+	arg := container.args[j]
 
-	# If single digit is present, deny
-	regex.match("--git-poll-interval=[0-9]m", args[_])
+	# Extract interval argument value
+	interval := split(arg, "--git-poll-interval=")[1]
+
+	# Ensure values is not of seconds and is at least 2 digits with minutes
+	regex.match("^([0-9]{1,}s|[0-9]{1}m)$", interval)
 	msg := "--git-poll-interval must be at least 10m"
 }
 
 deny[msg] {
+	some i
+
 	# Ensure only applies to flux images
-	containerImage := input.spec.template.spec.containers[i].image
-	contains(containerImage, image)
+	container := input.spec.template.spec.containers[i]
+	contains(container.image, image)
 
-	# Check if sync interval arg is present
-	args := input.spec.template.spec.containers[_].args
-	contains(args[_], "--sync-interval")
+	some j
+	arg := container.args[j]
 
-	# If single digit is present, deny
-	regex.match("--sync-interval=[0-9]m", args[_])
+	# Extract interval argument value
+	interval := split(arg, "--sync-interval=")[1]
+
+	# Ensure values is not of seconds and is at least 2 digits with minutes
+	regex.match("^([0-9]{1,}s|[0-9]{1}m)$", interval)
 	msg := "--sync-interval must be at least 10m"
 }
