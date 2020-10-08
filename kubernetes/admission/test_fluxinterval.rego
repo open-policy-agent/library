@@ -9,11 +9,11 @@ test_one_hour_allowed {
 }
 
 test_five_minutes_denied {
-	deny with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=5m", "--sync-interval=5m"]}]}}}}
+	count(deny) == 2 with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=5m", "--sync-interval=5m"]}]}}}}
 }
 
 test_seconds_denied {
-	deny with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=1s", "--sync-interval=10s"]}]}}}}
+	count(deny) == 2 with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=1s", "--sync-interval=10s"]}]}}}}
 }
 
 test_five_minutes_denied_git_poll {
@@ -26,4 +26,14 @@ test_five_minutes_denied_sync_interval {
 
 test_denied_multiple_containers {
 	count(deny) == 2 with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=10m", "--sync-interval=5m"]}, {"image": "fluxcd/flux:latest", "args": ["--git-poll-interval=1s"]}]}}}}
+}
+
+test_allowed_multiple_containers {
+	count(deny) == 0 with input as {"spec": {"template": {"spec": {"containers": [{"image": "fluxcd/flux:1.20.2", "args": ["--git-poll-interval=10m", "--sync-interval=10m"]}, {"image": "foo:latest", "args": ["--git-poll-interval=1s"]}]}}}}
+}
+
+test_convert {
+	convert_to_seconds("10m") == 600
+	convert_to_seconds("10s") == 10
+	convert_to_seconds("10h") == 36000
 }
