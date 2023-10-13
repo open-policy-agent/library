@@ -1,7 +1,7 @@
 package library.kubernetes.admission.mutating
 
 ############################################################
-# PATCH rules 
+# PATCH rules
 #
 # Note: All patch rules should start with `isValidRequest` and `isCreateOrUpdate`
 ############################################################

@@ -1,0 +1,49 @@
+rules:
+  bugs:
+    constant-condition:
+      level: ignore
+    rule-shadows-builtin:
+      # a few rules called "all"
+      level: ignore
+  idiomatic:
+    custom-in-construct:
+      level: ignore
+    no-defined-entrypoint:
+      level: ignore
+    use-some-for-output-vars:
+      level: ignore
+  imports:
+    prefer-package-imports:
+      level: ignore
+  style:
+    avoid-get-and-list-prefix:
+      level: ignore
+    external-reference:
+      level: ignore
+    file-length:
+      level: ignore
+    function-arg-return:
+      level: ignore
+    line-length:
+      level: ignore
+    no-whitespace-comment:
+      level: ignore
+    prefer-some-in-iteration:
+      level: ignore
+    prefer-snake-case:
+      level: ignore
+    rule-length:
+      level: ignore
+    todo-comment:
+      level: ignore
+    unconditional-assignment:
+      level: ignore
+    use-assignment-operator:
+      level: ignore
+  testing:
+    file-missing-test-suffix:
+      level: ignore
+    print-or-trace-call:
+      level: ignore
+    test-outside-test-package:
+      level: ignore
