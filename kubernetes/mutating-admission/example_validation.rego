@@ -1,7 +1,7 @@
 package library.kubernetes.admission.mutating
 
 ############################################################
-# DENY rules 
+# DENY rules
 ############################################################
 
 # Check for bad dogs

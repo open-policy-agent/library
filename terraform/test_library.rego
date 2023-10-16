@@ -17,7 +17,6 @@ test_resource_types {
 }
 
 test_small_create_of_type {
-	true
 	i = inputs.lineage0
 	library.num_creates_of_type.aws_instance = 1 with input as i
 	library.num_creates_of_type.aws_autoscaling_group = 1 with input as i

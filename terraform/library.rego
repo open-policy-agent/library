@@ -80,7 +80,7 @@ creates = makes {
 	makes = {name | obj = instance[name]; is_create(obj, true)}
 }
 
-# Dictionary mapping each resource-type to the number of creations of that type 
+# Dictionary mapping each resource-type to the number of creations of that type
 num_creates_of_type[resource_type] = num {
 	count(creates_of_type[resource_type], num)
 }
